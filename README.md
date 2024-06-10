@@ -1,5 +1,5 @@
 # first-follow-set-calculator
-First-Follow set calculator for context-free (LL type) and regular grammars.
+First-Follow set calculator for context-free (of course only LL type) and regular grammars.
 
 Grammar syntax:
 S -> A B

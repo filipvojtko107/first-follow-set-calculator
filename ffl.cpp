@@ -246,10 +246,9 @@ std::set<std::string> flw(const std::string& nonterm, const Rules& rules, const 
                     auto temp_pos = pos + 1;
                     if (is_term(*temp_pos, terms))
                     {
-                        flwset.insert(*temp_pos);
-                        //return most_righthand_side;
-                        break;
-                    }
+                        if (*temp_pos != EPSILON) { flwset.insert(*temp_pos); }
+                        continue;
+                    } 
 
                     const std::set<std::string>* fset = &fstset.at(*temp_pos);
                     // Projizdim dokud dostavam epsilon
@@ -266,8 +265,7 @@ std::set<std::string> flw(const std::string& nonterm, const Rules& rules, const 
                         {
                             if (is_term(*temp_pos, terms))
                             {
-                                flwset.insert(*temp_pos);
-                                //return most_righthand_side;
+                                if (*temp_pos != EPSILON) { flwset.insert(*temp_pos); }
                                 break;
                             } 
                             else { 
@@ -276,11 +274,10 @@ std::set<std::string> flw(const std::string& nonterm, const Rules& rules, const 
                         }
                     }
 
-                    if (temp_pos != r2.end()) 
-                    {
+                    if (temp_pos != r2.end()) {
                         add_to_flw_set(*fset, flwset);
-                        flwset.erase(EPSILON);
                     }
+                    flwset.erase(EPSILON);
                 }
             }
         }
@@ -334,12 +331,16 @@ void print_set(const Set& set)
     for (const auto& s : set)
     {
         std::cout << s.first << " = {";
-        auto ss = s.second.cbegin();
-        auto it = ss;
-        std::advance(it, s.second.size() - 1);
-        for (; ss != it; ++ss) {
-            std::cout << *ss << ", ";
+        if (!s.second.empty())
+        {
+            auto ss = s.second.cbegin();
+            auto it = ss;
+            std::advance(it, s.second.size() - 1);
+            for (; ss != it; ++ss) {
+                std::cout << *ss << ", ";
+            }
+            std::cout << *ss;
         }
-        std::cout << *ss << "}\n";
+        std::cout << "}\n";
     }
 }
