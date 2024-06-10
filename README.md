@@ -3,8 +3,11 @@ First-Follow set calculator for context-free (of course only LL type) and regula
 
 Grammar syntax:
 S -> A B
+
 A -> a c
+
 A -> epsilon
+
 B -> b
 
-In the Follow set the "epsilon" represents "$" (EOF).
+Every grammar rule has to be specified on a new line. In the Follow set the "epsilon" represents "$" (EOF).
